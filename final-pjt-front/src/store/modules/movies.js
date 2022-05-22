@@ -13,16 +13,14 @@ const params ={
 
 export default {
   state:{
-    movies: {
-
-    },
-    movie: {
-
-    },
+    movies: {},
+    movie: {},
+    nowPlaying: {},
   },
   getters:{
     movies: state => state.movies,
     movie: state => state.movie,
+    nowPlaying: state => state.nowPlaying,
   },
   mutations:{
     SET_MOVIES(state, movies){
@@ -30,11 +28,14 @@ export default {
     },
     SET_MOVIE(state, movie){
       state.movie = movie
+    },
+    FETCH_NOW_PLAYING(state, movies){
+      state.nowPlaying = movies
     }
 
   },
   actions:{
-    fetchmovies({commit}){
+    fetchMovies({commit}){
       axios({
         method:'GET',
         url: API_URL,
@@ -48,6 +49,18 @@ export default {
         console.log(err.response)
       })
     },
+    fetchNowPlayingMovies({commit}){
+      axios({
+        method:'get',
+        url:`https://api.themoviedb.org/3/movie/now_playing`,
+        params
+      })
+      .then(res=>{
+        const nowPlaying = res.data.results
+        commit('FETCH_NOW_PLAYING', nowPlaying)
+      })
+    }
+    ,
     fetchMovie({commit}, moviePk){
       axios({
         method:'get',
