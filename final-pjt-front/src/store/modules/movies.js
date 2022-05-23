@@ -15,12 +15,16 @@ export default {
   state:{
     movies: {},
     movie: {},
+    movieimgUrl: null,
+    moviebackimgUrl: null,
     nowPlaying: {},
   },
   getters:{
     movies: state => state.movies,
     movie: state => state.movie,
     nowPlaying: state => state.nowPlaying,
+    movieimgUrl: state => state.movieimgUrl,
+    moviebackimgUrl: state => state.moviebackimgUrl,
   },
   mutations:{
     SET_MOVIES(state, movies){
@@ -28,10 +32,12 @@ export default {
     },
     SET_MOVIE(state, movie){
       state.movie = movie
+      state.movieimgUrl = 'https://image.tmdb.org/t/p/w500'+ movie.poster_path
+      state.moviebackimgUrl = 'https://image.tmdb.org/t/p/w500'+ movie.backdrop_path
     },
     FETCH_NOW_PLAYING(state, movies){
       state.nowPlaying = movies
-    }
+    },
 
   },
   actions:{
@@ -59,8 +65,7 @@ export default {
         const nowPlaying = res.data.results
         commit('FETCH_NOW_PLAYING', nowPlaying)
       })
-    }
-    ,
+    },
     fetchMovie({commit}, moviePk){
       axios({
         method:'get',

@@ -1,12 +1,9 @@
 <template>
   <div>        
-    <div class="card m-3" style="height: 40em; width: 300px;">    
-      <img :src="imgUrl" class="card-img-top" style="height: 400px; width: 295px;" alt="img">
-        <div class="card-body">
-          <h5 class="card-title fw-bold">{{movie.title}}</h5>
-          <router-link :to=" { name: 'movie', params: { moviePk: movie.id } }" class="card-text">detail</router-link>
-        </div>
-    </div>
+      <router-link :to=" { name: 'movie', params: { moviePk: movie.id } }">
+        <img :src="imgUrl" class="card-img-top" style="height: 300px; width: 200px;" alt="img">
+      </router-link>     
+          <h5 class="fw-bold">{{movie.title}}</h5>
   </div>
 </template>
 
